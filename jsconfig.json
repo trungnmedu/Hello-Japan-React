@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@assets/*": [
+                "./src/assets/*"
+            ],
+            "@components/*": [
+                "./src/components/*"
+            ],
+            "@middleware/*": [
+                "./src/middleware/*"
+            ],
+            "@pages/*": [
+                "./src/pages/*"
+            ],
+            "@layouts/*": [
+                "./src/layouts/*"
+            ],
+            "@helpers/*": [
+                "./src/helpers/*"
+            ],
+            "@configs/*": [
+                "./src/configs/*"
+            ],
+            "@utils/*": [
+                "./src/utils/*"
+            ],
+            "@contexts/*": [
+                "./src/contexts/*"
+            ],
+            "@/*": [
+                "./src/*"
+            ],
+        }
+    }
+}
