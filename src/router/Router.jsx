@@ -16,7 +16,7 @@ import { useSelector } from "react-redux"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
 const AppRouter = () => {
-    const { role = '' } = useSelector(state => state.auth.account)
+    const { role = "CUSTOMER" } = useSelector(state => state.auth.account)
 
     return (
         <BrowserRouter>

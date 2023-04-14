@@ -66,8 +66,10 @@ const Consultancy = () => {
         const fetchConsultancies = async () => {
             setLoading(true)
             try {
-                const consultancies = await getAllConsultancy()
-                setConsultancies(consultancies)
+                const { success, payload } = await getAllConsultancy()
+                if (success) {
+                    setConsultancies(payload)
+                }
             } finally {
                 setLoading(false)
             }

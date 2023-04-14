@@ -16,8 +16,10 @@ const App = () => {
                 return
             }
 
+
             try {
                 const { success, payload } = await getProfile()
+
                 if (success) {
                     dispatch(setAccount(payload))
                 }
