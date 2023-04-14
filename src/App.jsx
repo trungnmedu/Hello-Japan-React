@@ -17,9 +17,10 @@ const App = () => {
             }
 
             try {
-                const account = await getProfile()
-                dispatch(setAccount(account))
-
+                const { success, payload } = await getProfile()
+                if (success) {
+                    dispatch(setAccount(payload))
+                }
             } finally {
                 setLoading(false)
             }
@@ -35,10 +36,8 @@ const App = () => {
                 loading ? (
                     <div className="h-screen w-screen flex justify-center items-center">
                         <div className="h-10 w-10 loading">
-
                         </div>
                     </div>
-
                 ) : <AppRouter />
             }
         </>

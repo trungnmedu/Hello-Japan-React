@@ -26,7 +26,10 @@ const GoogleLogin = () => {
     const handleGoogleLoginResult = async (result) => {
         try {
             const { code } = result
-            const { account, accessToken } = await googleSignIn({ code })
+
+            const { payload } = await googleSignIn({ code })
+            const { account, accessToken } = payload
+
             localStorage.setItem('accessToken', accessToken)
             dispatch(setAccount(account))
 
