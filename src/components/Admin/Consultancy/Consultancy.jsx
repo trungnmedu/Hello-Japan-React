@@ -80,8 +80,7 @@ const Consultancy = () => {
 
     return (
         <div className="mx-auto max-w-7xl px-4 pt-20 space-y-10">
-            <h2 className="text-2xl text-center text-catalina-blue font-medium">Đanh Sách Đăng Ký Tư Vấn</h2>
-
+            <h2 className="text-2xl text-center text-catalina-blue font-medium">Danh Sách Đăng Ký Tư Vấn</h2>
 
             <table className="w-full border-gray-200 border">
                 <thead>

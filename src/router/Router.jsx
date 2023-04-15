@@ -4,9 +4,9 @@ import Register from "@/pages/Register"
 import StudyAboard from "@/pages/StudyAboard"
 
 import Consultancy from "@components/Admin/Consultancy/Consultancy"
-import { LaborExportProcedure } from "@components/Admin/LaborExport/LaborExport"
+import AdminLaborExportProcedure from "@components/Admin/LaborExport/LaborExport"
 import PartnerStudy from "@components/Admin/PartnerStudy/PartnerStudy"
-import { StudyAboardProcedure } from "@components/Admin/StudyAbroad/StudyAbroad"
+import AdminStudyAboardProcedure from "@components/Admin/StudyAbroad/StudyAbroad"
 import Procedure from "@components/Home/Procedure/Procedure"
 import Admin from "@layouts/Admin"
 import Main from "@layouts/Main"
@@ -26,8 +26,8 @@ const AppRouter = () => {
                         <>
                             <Route path="admin" element={<Admin />} >
                                 <Route index element={<Consultancy />} />
-                                <Route path="study-abroad-procedure" element={<StudyAboardProcedure />} />
-                                <Route path="labor-export-procedure" element={<LaborExportProcedure />} />
+                                <Route path="study-abroad-procedure" element={<AdminStudyAboardProcedure />} />
+                                <Route path="labor-export-procedure" element={<AdminLaborExportProcedure />} />
                                 <Route path="partner-study" element={<PartnerStudy />} />
                             </Route>
                             <Route path="*" element={<Navigate to='/admin' />} />
