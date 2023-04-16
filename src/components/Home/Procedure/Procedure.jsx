@@ -1,7 +1,8 @@
+import { getAllPartnerStudy } from "@/services/public"
 import rules from "@/validation/rule"
 import procedureBanner from "@assets/images/procedure/procedure.svg"
 import { useFormik } from "formik"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import * as Yup from 'yup'
@@ -34,12 +35,23 @@ const studySchema = Yup.object().shape(
         name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
         email: Yup.string().matches(rules.email, "Email không hợp lệ.").required("Email là bắt buộc."),
         phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
-        location: Yup.string().matches(rules.require, 'Địa điểm không hợp lệ.').required('Địa điểm là bắt buộc.')
+        location: Yup.mixed().required('Địa điểm là bắt buộc.')
     }
 )
 
 const StudyRegister = ({ toggle }) => {
     const account = useSelector(state => state.auth.account)
+    const [locations, setLocations] = useState([])
+
+    useEffect(() => {
+        const fetchLocation = async () => {
+            const { success, payload } = await getAllPartnerStudy()
+            if (success) {
+                setLocations(payload || [])
+            }
+        }
+        fetchLocation()
+    }, [])
 
     const formik = useFormik(
         {
@@ -127,9 +139,8 @@ const StudyRegister = ({ toggle }) => {
                                     onBlur={handleBlur}
                                 >
                                     {
-                                        formik.values.location.length > 0 ? (
-
-                                            <p className="text-left">{formik.values.location}</p>
+                                        location ? (
+                                            <p className="text-left">{location?.name}</p>
                                         ) : (
                                             <p className="text-left text-gray-400">Chọn trường</p>
                                         )
@@ -142,12 +153,27 @@ const StudyRegister = ({ toggle }) => {
                                 </button>
 
                                 <ul className="mt-1 absolute max-h-56 overflow-x-hidden overflow-y-auto peer-focus:opacity-100 peer-focus:visible invisible opacity-0 top-full w-full left-0 border bg-white shadow text-gray-400 rounded transition-all duration-300">
-                                    <li
-                                        className="px-4 py-0.5 cursor-pointer text-black hover:bg-red-500 hover:text-white transition-all"
-                                        onClick={() => handleSelectLocation('Trường Đại Học Tokyo')}
-                                    >
-                                        Trường Đại Học Tokyo
-                                    </li>
+
+                                    {
+                                        locations?.map(
+                                            ({ id, name, logo }) => (
+                                                <li
+                                                    key={id}
+                                                    className="px-4 py-0.5 cursor-pointer text-black hover:bg-red-500 hover:text-white transition-all"
+                                                    onClick={() => handleSelectLocation({ id, name })}
+                                                >
+                                                    <div className="flex space-x-2 py-1 items-center">
+                                                        <img
+                                                            className="w-8 h-8 rounded flex-none"
+                                                            src={logo}
+                                                            alt="logo"
+                                                        />
+                                                        <p>{name}</p>
+                                                    </div>
+                                                </li>
+                                            )
+                                        )
+                                    }
                                 </ul>
                             </div>
                         </div>

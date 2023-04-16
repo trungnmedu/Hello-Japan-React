@@ -48,7 +48,6 @@ const PartnerStudy = () => {
                                 <li key={index} className="list-none p-2 bg-white space-y-2 rounded overflow-hidden shadow hover:cursor-pointer hover:scale-105 transition-all duration-300">
                                     <img className="block" alt='logo' src={partner.image} />
                                     <h2 className="text-center italic font-medium">{partner.name}</h2>
-
                                 </li>
                             )
                         )

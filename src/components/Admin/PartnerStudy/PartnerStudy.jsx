@@ -6,14 +6,13 @@ import { useFormik } from "formik"
 import { useCallback, useEffect, useState } from "react"
 import * as Yup from 'yup'
 
-
 const studyPartner = Yup.object().shape(
     {
         name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
-        address: Yup.string().matches(rules.require, "Địa chỉ không hợp lệ.").required("Địa chỉ là bắt buộc."),
+        address: Yup.string().required("Địa chỉ là bắt buộc."),
         phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
         file: Yup.mixed().required('Logo là bắt buộc.'),
-        description: Yup.string().matches(rules.description, "Mô tả không hợp lệ.")
+        description: Yup.string()
     }
 )
 
@@ -44,8 +43,8 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                         }
                     )
                     await addPartnerStudy(payload)
-                    // formik.resetForm()
                     refetch()
+                    toggle()
                 } catch {
                     console.log("Error")
                 }
@@ -151,17 +150,14 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                                     fileImage ? (
                                         <img
                                             src={fileImage}
-
+                                            alt="hello-japan"
                                         />
-
                                     ) : (
-
                                         <div className="p-5">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                             </svg>
                                         </div>
-
                                     )
                                 }
 
@@ -216,15 +212,15 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
     )
 }
 
-
 const PartnerStudy = () => {
     const [displayAddPartner, setDisplayStudyAddPartner] = useState(false)
     const [partners, setPartners] = useState([])
 
-
     const fetchPartners = useCallback(async () => {
-        const partners = await getAllPartnerStudy()
-        setPartners(partners)
+        const { success, payload } = await getAllPartnerStudy()
+        if (success) {
+            setPartners(payload)
+        }
     }, [])
 
 
@@ -271,19 +267,22 @@ const PartnerStudy = () => {
                     {
                         partners.map(
                             (partner) => (
-                                <tr key={partner?.id} className="hover:bg-gray-100 transition-colors border-b last:border-b-0">
+                                <tr
+                                    key={partner.id}
+                                    className="hover:bg-gray-100 transition-colors border-b last:border-b-0"
+                                >
                                     <td className="px-4">
-                                        <div className="flex space-x-1">
+                                        <div className="flex space-x-2 my-1">
                                             <img
                                                 alt="Hello Japan"
-                                                className="w-10 h-10 aspect-square"
-                                                src="https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/324870190_904379383948031_7713069160720974885_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=iv-AD0qUWsYAX_-vuWc&_nc_ht=scontent.fsgn5-8.fna&oh=00_AfA38uLrzpzo7coS8Ko0YDlr3dwRa-_NG4fm4_8SwxDkjA&oe=640CE8E1"
+                                                className="w-10 h-10 rounded overflow-hidden aspect-square"
+                                                src={partner?.logo}
                                             />
                                             <p className="self-center">{partner?.name}</p>
                                         </div>
                                     </td>
                                     <td className="py-2 px-4">{partner?.address}</td>
-                                    <td className="py-2 px-4">{partner?.createdAt}</td>
+                                    <td className="py-2 px-4">{new Date(partner?.createdAt).toLocaleDateString()}</td>
                                     <td className="py-2 px-4">4.5/5</td>
                                     <td className="py-2 px-4">
                                         <div className="flex space-x-2">
@@ -304,7 +303,6 @@ const PartnerStudy = () => {
                     }
                 </tbody>
             </table>
-
             {displayAddPartner ? <AddPartnerStudy refetch={fetchPartners} toggle={toggleDisplayAddPartner} /> : null}
         </div>
     )
