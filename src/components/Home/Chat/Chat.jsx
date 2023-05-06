@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react"
-
+import SocketService from "@/services/socket";
+import { useCallback, useEffect, useState } from "react";
 const ChatSupport = () => {
 
     const [displayChat, setDisplayChat] = useState(false)
@@ -7,6 +7,21 @@ const ChatSupport = () => {
         setDisplayChat(toggle => !toggle)
     }, [])
 
+    useEffect(() => {
+
+        const connectChatService = async () => {
+            try {
+                const socket = await SocketService.connect()
+            } catch (error) {
+                console.log(error.message);
+            }
+
+        }
+
+        connectChatService()
+
+        return () => SocketService.disconnect()
+    }, [])
 
     return (
         <div className="fixed z-40 bottom-5 right-10">
