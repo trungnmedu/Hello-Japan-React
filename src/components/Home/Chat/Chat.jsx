@@ -1,5 +1,10 @@
 import SocketService from "@/services/socket";
+import rules from "@/validation/rule";
+import { useFormik } from "formik";
 import { useCallback, useEffect, useState } from "react";
+import * as Yup from 'yup';
+
+
 const ChatSupport = () => {
 
     const [displayChat, setDisplayChat] = useState(false)
@@ -12,6 +17,11 @@ const ChatSupport = () => {
         const connectChatService = async () => {
             try {
                 const socket = await SocketService.connect()
+                socket.on(
+                    "chat", (data) => {
+                        console.log(data)
+                    }
+                )
             } catch (error) {
                 console.log(error.message);
             }
@@ -23,18 +33,39 @@ const ChatSupport = () => {
         return () => SocketService.disconnect()
     }, [])
 
+    const formik = useFormik(
+        {
+            validateOnBlur: true,
+            validateOnChange: true,
+            validateOnMount: true,
+            validationSchema: Yup.object().shape(
+                { message: Yup.string(rules.notEmpty, "Invalid").required("Tin nhắn là bắt buộc.") }
+            ),
+            initialValues: {
+                message: ""
+            },
+            onSubmit: async ({ message }) => {
+                SocketService.sendMessage(message.trim())
+            }
+        }
+    )
+
+    const { values, touched, isValid, isSubmitting, handleBlur, handleChange, handleSubmit } = formik
+    const { message } = values
+    const isDisable = (!isValid && touched.message) || isSubmitting
+
     return (
         <div className="fixed z-40 bottom-5 right-10">
             {
                 displayChat ? (
                     <div
                         style={{ height: '80vh' }}
-                        className="max-w-sm bg-dark-blue rounded flex flex-col shadow"
+                        className="max-w-sm bg-white rounded flex flex-col shadow"
                     >
-                        <div className="border-b p-2 text-white border-gray-200 flex justify-between">
+                        <div className="border-b p-2 text-slate-700 border-gray-200 flex justify-between">
                             <h2 className="text-lg">Chatting with Hello Japan</h2>
                             <button
-                                className="h-6 aspect-square hover:p-1 hover:bg-red-600 rounded-full transition-all"
+                                className="h-6 aspect-square hover:p-1 hover:bg-red-600 hover:text-white rounded-full transition-all"
                                 onClick={toggleDisplayChat}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-full h-full">
@@ -43,8 +74,8 @@ const ChatSupport = () => {
                             </button>
                         </div>
 
-                        <div className="grow p-5 flex flex-col justify-end overflow-auto space-y-2">
-                            <ul className="space-y-4">
+                        <div className="grow flex flex-col justify-end overflow-auto space-y-2">
+                            <ul className="p-5 space-y-4">
 
                                 <li className="flex space-x-2 h-fit">
                                     <div className="w-20 h-20">
@@ -62,39 +93,51 @@ const ChatSupport = () => {
 
                                 <li className="flex flex-col items-end">
                                     <p className="w-fit max-w-full bg-blue-600 rounded-full p-2 px-6 text-white">It's like a dream come true</p>
-                                    <small className="text-white">15 April</small>
                                 </li>
 
                             </ul>
 
-                            <div className="bg-white shadow flex rounded-lg">
-                                <div className="flex-3 flex content-center items-center text-center p-4 pr-0">
-                                    <span className="block text-center text-gray-400 hover:text-gray-800">
-                                        <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24" className="h-6 w-6"><path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </span>
-                                </div>
-                                <div className="flex-1">
-                                    <textarea name="message" className="w-full block outline-none py-4 px-4 bg-transparent" rows="1" placeholder="Type a message..." autoFocus=""></textarea>
-                                </div>
-                                <div className="flex-2 w-32 p-2 flex content-center items-center">
-                                    <div className="flex-1 text-center">
-                                        <span className="text-gray-400 hover:text-gray-800">
-                                            <span className="inline-block align-text-bottom">
-                                                <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24" className="w-6 h-6"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
-                                            </span>
-                                        </span>
-                                    </div>
-                                    <div className="flex-1">
-                                        <button className="bg-blue-400 w-10 h-10 rounded-full inline-block">
-                                            <span className="inline-block align-text-bottom">
-                                                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" className="w-4 h-4 text-white">
-                                                    <path d="M5 13l4 4L19 7"></path>
-                                                </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <form
+                                onSubmit={handleSubmit}
+                                className="h-12 flex items-center px-5 border-t"
+                            >
+                                <button
+                                    type="button"
+                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                    </svg>
+                                </button>
+
+                                <input
+                                    name="message"
+                                    placeholder="Aa"
+                                    value={message}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    className="grow px-2 outline-none resize-none"
+                                    rows={1}
+                                />
+                                <button
+                                    type="button"
+                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isDisable}
+                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m9.813 5.146 9.027 3.99c4.05 1.79 4.05 4.718 0 6.508l-9.027 3.99c-6.074 2.686-8.553.485-5.515-4.876l.917-1.613c.232-.41.232-1.09 0-1.5l-.917-1.623C1.26 4.66 3.749 2.46 9.813 5.146ZM6.094 12.389h7.341"></path>
+                                    </svg>
+                                </button>
+
+                            </form >
                         </div>
                     </div>
                 ) : (

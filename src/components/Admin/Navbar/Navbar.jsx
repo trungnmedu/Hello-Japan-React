@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <header className="bg-white sticky top-0 z-40 shadow">
 
-            <div className="h-20 py-3 mx-auto max-w-7xl px-4 flex items-center justify-between">
+            <div className="h-header py-3 mx-auto max-w-7xl px-4 flex items-center justify-between">
                 <Link to='/admin' className="h-full">
                     <img
                         className="block h-full w-auto overflow-hidden"
@@ -58,6 +58,12 @@ const Navbar = () => {
                     >
                         Liên Kết XKLĐ
                     </Link>
+                    <Link
+                        className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '//admin/partner-study' ? 'text-red-600' : 'text-dark-blue'}`}
+                        to='/admin/chat'
+                    >
+                        Tin Nhắn
+                    </Link>
                 </ul>
 
                 <div className="relative ml-3">
@@ -65,7 +71,11 @@ const Navbar = () => {
                         type="button"
                         className="w-fit h-fit peer"
                     >
-                        <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                        <img
+                            className="h-10 w-10 rounded-full"
+                            src="https://lineone.piniastudio.com/images/avatar/avatar-11.jpg"
+                            alt=""
+                        />
                     </button>
 
                     <ul className="absolute right-0 z-10 mt-2 w-48 bg-white border rounded peer-focus:visible invisible">

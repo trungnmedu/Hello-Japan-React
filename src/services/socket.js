@@ -1,5 +1,5 @@
+import { getToken } from "@utils/jwt";
 import { io } from "socket.io-client";
-
 
 const socket = io(
     "ws://localhost:5000",
@@ -8,7 +8,7 @@ const socket = io(
         autoConnect: false,
         reconnectionDelayMax: 10000,
         auth: {
-            token: localStorage.getItem('accessToken') || false
+            token: getToken()
         }
     }
 )
@@ -34,6 +34,17 @@ class SocketService {
     static disconnect() {
         if (socket.connected) {
             socket.disconnect()
+        }
+    }
+
+    static async sendMessage(message) {
+        const payload = JSON.stringify(
+            {
+                body: message
+            }
+        )
+        if (socket.connected) {
+            socket.emit('chat', payload)
         }
     }
 }

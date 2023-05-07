@@ -9,7 +9,6 @@ const StudyAboardProcedure = () => {
 }
 
 
-
 const AdminStudyAboardProcedure = () => {
     const [loading, setLoading] = useState(true)
     const [consultancies, setConsultancies] = useState([])

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom"
 
 const Admin = () => {
     return (
-        <div className="h-screen overflow-x-hidden overflow-y-auto">
+        <div className="h-screen flex flex-col overflow-x-hidden overflow-y-auto">
             <Navbar />
             <div className="grow">
                 <Outlet />

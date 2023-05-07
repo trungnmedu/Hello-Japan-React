@@ -1,19 +1,22 @@
+import { useSelector } from "react-redux"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+
 import LaborExport from "@/pages/LaborExport"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
 import StudyAboard from "@/pages/StudyAboard"
 
-import Consultancy from "@components/Admin/Consultancy/Consultancy"
+import AdminChat from "@components/Admin/Chat/Chat"
+import AdminConsultancy from "@components/Admin/Consultancy/Consultancy"
 import AdminLaborExportProcedure from "@components/Admin/LaborExport/LaborExport"
-import PartnerStudy from "@components/Admin/PartnerStudy/PartnerStudy"
+import AdminPartnerStudy from "@components/Admin/PartnerStudy/PartnerStudy"
 import AdminStudyAboardProcedure from "@components/Admin/StudyAbroad/StudyAbroad"
-import Procedure from "@components/Home/Procedure/Procedure"
 import Admin from "@layouts/Admin"
+
+import Procedure from "@components/Home/Procedure/Procedure"
 import Main from "@layouts/Main"
 import Home from "@pages/Home"
 import Introduction from "@pages/Introduction"
-import { useSelector } from "react-redux"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
 const AppRouter = () => {
     const { role = "CUSTOMER" } = useSelector(state => state.auth.account)
@@ -25,10 +28,11 @@ const AppRouter = () => {
                     role === "ADMIN" ? (
                         <>
                             <Route path="admin" element={<Admin />} >
-                                <Route index element={<Consultancy />} />
+                                <Route index element={<AdminConsultancy />} />
                                 <Route path="study-abroad-procedure" element={<AdminStudyAboardProcedure />} />
                                 <Route path="labor-export-procedure" element={<AdminLaborExportProcedure />} />
-                                <Route path="partner-study" element={<PartnerStudy />} />
+                                <Route path="partner-study" element={<AdminPartnerStudy />} />
+                                <Route path="chat" element={<AdminChat />} />
                             </Route>
                             <Route path="*" element={<Navigate to='/admin' />} />
                         </>

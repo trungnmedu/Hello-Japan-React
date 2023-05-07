@@ -1,9 +1,19 @@
+
 const decodeJwt = (token) => {
-    const [header, payload, signature] = token.split('.')
-    return Buffer.from(payload, 'base64')
+    try {
+        const [header, payload] = token.split('.')
+        return JSON.parse(atob(payload))
+    } catch {
+        return false
+    }
+}
+
+const getToken = () => {
+    return localStorage.getItem('accessToken') || false
 }
 
 export {
-    decodeJwt
-};
+    decodeJwt,
+    getToken
+}
 

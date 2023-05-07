@@ -16,17 +16,37 @@
     height: 8px;
 }
 
+.scrollbar-1::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+.scrollbar-2::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.scrollbar-3::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.scrollbar-5::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
 *::-webkit-scrollbar-thumb {
     border-radius: 4px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: #606060;
+    background: #d4dce6;
     transition: all linear 0.25s;
 }
 
 *:hover::-webkit-scrollbar-thumb {
-    background: #909090;
+    background: #94a3b8;
 }
 
 button,

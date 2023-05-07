@@ -15,6 +15,10 @@ module.exports = {
             },
             animation: {
                 'fade-in': 'fadeIn 0.25s linear',
+            },
+            height: {
+                'header': '5rem',
+                'body': 'calc(100vh - 5rem)'
             }
         },
     },

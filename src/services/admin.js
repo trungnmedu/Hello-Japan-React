@@ -30,10 +30,16 @@ const deletePartnerStudy = async (payload) => {
     return data
 }
 
+const getAllConversations = async () => {
+    const { data } = await instance.get('/conversations')
+    return data
+}
+
 export {
     getAllConsultancy,
     deletePartnerStudy,
     updateConsultancy,
     addPartnerStudy,
+    getAllConversations
 }
 
