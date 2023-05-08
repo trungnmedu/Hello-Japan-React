@@ -6,6 +6,7 @@ const socket = io(
     {
         path: "/chat",
         autoConnect: false,
+        transports: ["websocket"],
         reconnectionDelayMax: 10000,
         auth: {
             token: getToken()
