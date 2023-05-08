@@ -1,51 +1,67 @@
-import { getToken } from "@utils/jwt";
-import { io } from "socket.io-client";
+import {getToken} from "@utils/jwt";
+import {io} from "socket.io-client";
 
-const socket = io(
-    "ws://localhost:5000",
-    {
-        path: "/chat",
-        autoConnect: false,
-        transports: ["websocket"],
-        reconnectionDelayMax: 10000,
-        auth: {
-            token: getToken()
-        }
-    }
-)
 
 class SocketService {
-    static connect() {
+    static socket
+    static isConnecting
+
+    static async getSocket() {
+        if (SocketService.socket && (SocketService.socket.connected || SocketService.isConnecting)) {
+            return SocketService.socket
+        }
+
+        SocketService.socket = io(
+            "ws://localhost:5000",
+            {
+                path: "/chat",
+                autoConnect: false,
+                transports: ["websocket"],
+                reconnectionDelayMax: 1000,
+                auth: {
+                    token: getToken()
+                }
+            }
+        )
+
         return new Promise(
             (resolve, reject) => {
-                socket.connect()
-                socket.on(
+                SocketService.isConnecting = true
+                SocketService.socket.connect()
+                SocketService.socket.on(
                     "connect",
-                    () => resolve(socket)
+                    () => {
+                        SocketService.isConnecting = false
+                        resolve(SocketService.socket)
+                    }
                 )
-                socket.on(
+                SocketService.socket.on(
                     "connect_error",
-                    error => reject(error)
+                    error => {
+                        SocketService.isConnecting = false
+                        reject(error)
+                    }
                 )
             }
         )
     }
 
-
     static disconnect() {
-        if (socket.connected) {
-            socket.disconnect()
+        if(SocketService.socket && SocketService.socket.connected){
+            SocketService.socket.disconnect()
+            SocketService.socket = null
+        }
+    }
+
+    static registerEvent (event, callback) {
+        if(SocketService.socket.connected){
+            SocketService.socket.on(event, callback)
         }
     }
 
     static async sendMessage(message) {
-        const payload = JSON.stringify(
-            {
-                body: message
-            }
-        )
-        if (socket.connected) {
-            socket.emit('chat', payload)
+        if (SocketService.socket && SocketService.socket.connected) {
+            SocketService.socket.emit('chat', message)
         }
     }
 }

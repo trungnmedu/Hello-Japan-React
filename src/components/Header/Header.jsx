@@ -1,9 +1,9 @@
 import LogoImage from "@assets/images/Logo.png"
-import { setAccount } from "@contexts/account"
-import { useCallback } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { HashLink } from "react-router-hash-link"
+import {setAccount} from "@contexts/account"
+import {useCallback} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import {Link} from "react-router-dom"
+import {HashLink} from "react-router-hash-link"
 
 const Header = () => {
     const account = useSelector(state => state.auth.account)

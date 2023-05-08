@@ -1,9 +1,9 @@
-import { addPartnerStudy, deletePartnerStudy } from "@/services/admin"
-import { getAllPartnerStudy } from "@/services/public"
+import {addPartnerStudy, deletePartnerStudy} from "@/services/admin"
+import {getAllPartnerStudy} from "@/services/public"
 import rules from "@/validation/rule"
-import { base64Image } from "@utils/file"
-import { useFormik } from "formik"
-import { useCallback, useEffect, useState } from "react"
+import {base64Image} from "@utils/file"
+import {useFormik} from "formik"
+import {useCallback, useEffect, useState} from "react"
 import * as Yup from 'yup'
 
 const studyPartner = Yup.object().shape(

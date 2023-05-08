@@ -1,8 +1,8 @@
-import { setAccount } from "@contexts/account"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import {setAccount} from "@contexts/account"
+import {useEffect, useState} from "react"
+import {useDispatch} from "react-redux"
 import AppRouter from "./router/Router"
-import { getProfile } from "./services/authentication"
+import {getProfile} from "./services/authentication"
 
 const App = () => {
     const [loading, setLoading] = useState(true)

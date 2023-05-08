@@ -1,8 +1,8 @@
 import LogoImage from "@assets/images/Logo.png";
-import { setAccount } from "@contexts/account";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {setAccount} from "@contexts/account";
+import {useCallback} from "react";
+import {useDispatch} from "react-redux";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 const Navbar = () => {
     const { pathname } = useLocation()

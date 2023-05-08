@@ -1,10 +1,10 @@
-import { getAllPartnerStudy } from "@/services/public"
+import {getAllPartnerStudy} from "@/services/public"
 import rules from "@/validation/rule"
 import procedureBanner from "@assets/images/procedure/procedure.svg"
-import { useFormik } from "formik"
-import { useCallback, useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import {useFormik} from "formik"
+import {useCallback, useEffect, useState} from "react"
+import {useSelector} from "react-redux"
+import {Link} from "react-router-dom"
 import * as Yup from 'yup'
 
 

@@ -1,6 +1,6 @@
 import logoImage from "@assets/images/Logo.png";
 import GooglePopupSignIn from "@components/GoogleAuthProvider/GooglePopupSignIn";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Register = () => {
     return (

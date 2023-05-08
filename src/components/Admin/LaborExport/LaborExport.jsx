@@ -1,4 +1,4 @@
-import { useState } from "react"
+import {useState} from "react"
 
 const AdminLaborExportProcedure = () => {
     const [loading, setLoading] = useState(true)

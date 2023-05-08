@@ -1,5 +1,5 @@
-import { getAllConsultancy, updateConsultancy } from "@/services/admin"
-import { useCallback, useEffect, useState } from "react"
+import {getAllConsultancy, updateConsultancy} from "@/services/admin"
+import {useCallback, useEffect, useState} from "react"
 
 const ConsultancyItem = ({ consultancy }) => {
     const { id, name, phone, type, description, createdAt } = consultancy

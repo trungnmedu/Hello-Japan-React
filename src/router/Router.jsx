@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import {useSelector} from "react-redux"
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
 
 import LaborExport from "@/pages/LaborExport"
 import Login from "@/pages/Login"

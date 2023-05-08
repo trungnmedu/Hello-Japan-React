@@ -1,4 +1,5 @@
 import introduceImage from '@assets/images/home/introduce_hello_japan.png'
+
 const Introduce = () => {
     return (
         <div className="py-10">

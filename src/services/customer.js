@@ -8,7 +8,13 @@ const postRequestConsultancy = async (payload) => {
     return data
 }
 
+const getAdmin = async () => {
+    const { data } = await instance.get(        '/get-admin'    )
+    return data
+}
+
 export {
-    postRequestConsultancy
+    postRequestConsultancy,
+    getAdmin
 }
 
