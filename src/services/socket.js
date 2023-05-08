@@ -11,6 +11,7 @@ class SocketService {
             return SocketService.socket
         }
 
+        SocketService.isConnecting = true
         SocketService.socket = io(
             "ws://localhost:5000",
             {
@@ -26,7 +27,6 @@ class SocketService {
 
         return new Promise(
             (resolve, reject) => {
-                SocketService.isConnecting = true
                 SocketService.socket.connect()
                 SocketService.socket.on(
                     "connect",
@@ -54,8 +54,21 @@ class SocketService {
     }
 
     static registerEvent (event, callback) {
-        if(SocketService.socket.connected){
+        if(SocketService.socket ){
             SocketService.socket.on(event, callback)
+        }
+    }
+
+    static removeEvent(event){
+        console.log("REMOVE")
+        if(SocketService.socket){
+            SocketService.socket.off(event)
+        }
+    }
+
+    static removeAllEvent(event){
+        if(SocketService.socket){
+            SocketService.socket.removeAllListeners()
         }
     }
 

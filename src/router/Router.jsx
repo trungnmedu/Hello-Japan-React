@@ -32,7 +32,7 @@ const AppRouter = () => {
                                 <Route path="study-abroad-procedure" element={<AdminStudyAboardProcedure />} />
                                 <Route path="labor-export-procedure" element={<AdminLaborExportProcedure />} />
                                 <Route path="partner-study" element={<AdminPartnerStudy />} />
-                                <Route path="chat" element={<AdminChat />} />
+                                <Route path="chat/*" element={<AdminChat />} />
                             </Route>
                             <Route path="*" element={<Navigate to='/admin' />} />
                         </>

@@ -1,5 +1,7 @@
 import {getAllConversations} from "@/services/admin"
-import {useEffect, useState} from "react"
+import {memo, useCallback, useEffect, useState} from "react"
+import SocketService from "@/services/socket.js";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 const Header = () => {
     return (
@@ -40,42 +42,68 @@ const Header = () => {
 }
 
 const ContactRepresent = ({conversation}) => {
-    const {messages, name, avatar, clientId} = conversation
+    const {name, avatar, clientId} = conversation
+    const [messages, setMessages] = useState(conversation.messages)
+    const location = useLocation()
 
     const unread = messages?.filter(message => message?.status === "UNREAD")?.length || 0
     const {body: lastMessage} = messages?.slice(-1).at(0) || {}
 
+    const addMessage = useCallback((data) => {
+        const {clientId: conversationId, message} = data
+
+        console.log("1")
+        if (conversationId !== clientId) {
+            return
+        }
+
+        setMessages(messages => [...messages, message])
+    }, [])
+
+    useEffect(() => {
+        SocketService.registerEvent("chat", addMessage)
+    }, [])
+
+    const active = location.pathname.split("/").at(-1) === clientId
+
     return (
-        <div className="h-12 flex space-x-4">
-            <div className="flex-none h-full aspect-square relative">
-                <img
-                    src={avatar || "https://picsum.photos/200"}
-                    alt="avatar"
-                    className="h-full w-full rounded-full"
-                />
-            </div>
-            <div className="grow overflow-hidden">
-                <div className="flex overflow-hidden space-x-2">
-                    <p className="grow truncate font-medium">{name || clientId}</p>
-                    <span className="text-sm text-slate-400">Tue</span>
+        <Link
+            className={`block transition-all rounded-lg duration-200 cursor-pointer p-2 ${active ? 'bg-zinc-200' : 'hover:bg-zinc-200'}`}
+            to={`/admin/chat/${clientId}`}
+        >
+            <div className="h-12 flex space-x-4">
+                <div className="flex-none h-full aspect-square relative">
+                    <img
+                        src={avatar || "https://picsum.photos/200"}
+                        alt="avatar"
+                        className="h-full w-full rounded-full"
+                    />
                 </div>
-                <div className="flex overflow-hidden space-x-2">
-                    <p className="grow text-sm text-slate-400 truncate">{lastMessage}</p>
-                    {
-                        unread ? (
-                            <span
-                                className="flex-none flex items-center justify-center text-xs h-5 w-5 bg-blue-700 text-white rounded-full">{unread}</span>
-                        ) : null
-                    }
+                <div className="grow overflow-hidden">
+                    <div className="flex overflow-hidden space-x-2">
+                        <p className="grow truncate font-medium">{name || clientId}</p>
+                        <span className="text-sm text-slate-400">Tue</span>
+                    </div>
+                    <div className="flex overflow-hidden space-x-2">
+                        <p className="grow text-sm text-slate-400 truncate">{lastMessage}</p>
+                        {
+                            unread ? (
+                                <span
+                                    className="flex-none flex items-center justify-center text-xs h-5 w-5 bg-blue-700 text-white rounded-full">{unread}</span>
+                            ) : null
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
+
 
 const Contacts = () => {
     const [loading, setLoading] = useState(true)
     const [conversations, setConversations] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         (
@@ -91,11 +119,21 @@ const Contacts = () => {
                 }
             }
         )()
+
+
     }, [])
 
+    useEffect(() => {
+        if (conversations.length === 0) {
+            navigate("/admin/chat")
+            return
+        }
+        const {clientId} = conversations.at(0)
+        navigate(`/admin/chat/${clientId}`)
+    }, [conversations])
 
     return (
-        <ul className="space-y-2.5">
+        <div className="h-fit">
             {
                 loading ? (
                     <div className="flex justify-center items-center">
@@ -106,18 +144,11 @@ const Contacts = () => {
             {
                 conversations.length > 0 ? (
                     conversations.map(
-                        conversation => (
-                            <li
-                                className="hover:bg-zinc-200 transition-all duration-200 cursor-pointer px-2 py-1.5 rounded"
-                                key={conversation.clientId}
-                            >
-                                <ContactRepresent conversation={conversation}/>
-                            </li>
-                        )
+                        conversation => <ContactRepresent key={conversation.clientId} conversation={conversation}/>
                     )
                 ) : null
             }
-        </ul>
+        </div>
     )
 }
 
@@ -133,4 +164,4 @@ const SidebarPanel = () => {
     )
 }
 
-export default SidebarPanel
+export default memo(SidebarPanel)

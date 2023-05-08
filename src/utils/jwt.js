@@ -9,7 +9,6 @@ const decodeJwt = (token) => {
 }
 
 const getToken = () => {
-    console.log("GetUTH")
     return localStorage.getItem('accessToken') || false
 }
 

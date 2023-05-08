@@ -1,12 +1,12 @@
 import instance from '@middleware/request'
 
 const getAllConsultancy = async () => {
-    const { data } = await instance.get('/consultancy')
+    const {data} = await instance.get('/consultancy')
     return data
 }
 
 const updateConsultancy = async (payload) => {
-    const { data } = await instance.put(
+    const {data} = await instance.put(
         '/consultancy',
         payload
     )
@@ -14,7 +14,7 @@ const updateConsultancy = async (payload) => {
 }
 
 const addPartnerStudy = async (payload) => {
-    const { data } = await instance.post(
+    const {data} = await instance.post(
         '/partner-study',
         payload
     )
@@ -23,15 +23,23 @@ const addPartnerStudy = async (payload) => {
 
 
 const deletePartnerStudy = async (payload) => {
-    const { data } = await instance.delete(
+    const {data} = await instance.delete(
         '/partner-study',
-        { data: payload }
+        {data: payload}
     )
     return data
 }
 
 const getAllConversations = async () => {
-    const { data } = await instance.get('/conversations')
+    const {data} = await instance.get('/conversations')
+    return data
+}
+
+const getConversationByClientId = async (params) => {
+    const {data} = await instance.get(
+        '/conversations',
+        {params}
+    )
     return data
 }
 
@@ -40,6 +48,7 @@ export {
     deletePartnerStudy,
     updateConsultancy,
     addPartnerStudy,
-    getAllConversations
+    getAllConversations,
+    getConversationByClientId
 }
 

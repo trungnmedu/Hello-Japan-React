@@ -1,5 +1,5 @@
 import {setAccount} from "@contexts/account"
-import {useEffect, useState} from "react"
+import {useEffect, useState, memo} from "react"
 import {useDispatch} from "react-redux"
 import AppRouter from "./router/Router"
 import {getProfile} from "./services/authentication"
@@ -9,26 +9,28 @@ const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const fetchAccount = async () => {
-            const accessToken = localStorage.getItem('accessToken')
-            if (!accessToken) {
-                setLoading(false)
-                return
-            }
-
-
-            try {
-                const { success, payload } = await getProfile()
-
-                if (success) {
-                    dispatch(setAccount(payload))
+        (
+            async () => {
+                const accessToken = localStorage.getItem('accessToken')
+                if (!accessToken) {
+                    setLoading(false)
+                    return
                 }
-            } finally {
-                setLoading(false)
-            }
 
-        }
-        fetchAccount()
+
+                try {
+                    const {success, payload} = await getProfile()
+
+                    if (success) {
+                        dispatch(setAccount(payload))
+                    }
+                } finally {
+                    setLoading(false)
+                }
+
+            }
+        )()
+
     }, [])
 
 
@@ -40,7 +42,7 @@ const App = () => {
                         <div className="h-10 w-10 loading">
                         </div>
                     </div>
-                ) : <AppRouter />
+                ) : <AppRouter/>
             }
         </>
     )

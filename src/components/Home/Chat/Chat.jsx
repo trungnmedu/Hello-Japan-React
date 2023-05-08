@@ -1,13 +1,12 @@
 import SocketService from "@/services/socket";
 import rules from "@/validation/rule";
 import {useFormik} from "formik";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, memo} from "react";
 import * as Yup from 'yup';
 import {useSelector} from "react-redux";
 import {getAllConversations} from "@/services/admin.js";
 import {nanoid} from "nanoid";
-import {getAdmin} from "@/services/customer.js";
-
+import {getAdmin} from "@/services/customer.js"
 
 const Message = ({self, message}) => {
     const {sender, body} = message
@@ -41,38 +40,23 @@ const Message = ({self, message}) => {
     )
 }
 
-const ChatSupport = () => {
+const Chat = () => {
     const [loading, setLoading] = useState(false)
     const [conversations, setConversations] = useState([])
     const [admin, setAdmin] = useState({})
     const {account} = useSelector(state => state.auth)
 
-    const [displayChat, setDisplayChat] = useState(false)
-    const toggleDisplayChat = useCallback(() => {
-        setDisplayChat(toggle => !toggle)
+
+    useEffect(() => {
+        SocketService.registerEvent("chat", addMessage)
+        return () => SocketService.removeEvent("chat")
     }, [])
 
+
     useEffect(() => {
         (
             async () => {
-                try {
-                    await SocketService.getSocket()
-                    SocketService.registerEvent("chat", addMessage)
-                } catch (error) {
-                    console.log(error.message);
-                }
-            }
-        )()
-
-        return () => SocketService.disconnect()
-    }, [account])
-
-
-    useEffect(() => {
-
-        (
-            async () => {
-                if(Object.keys(account).length === 0){
+                if (Object.keys(account).length === 0) {
                     setLoading(false)
                     setConversations([])
                     return
@@ -95,7 +79,9 @@ const ChatSupport = () => {
         (
             async () => {
                 const {success, payload} = await getAdmin()
-                setAdmin(payload)
+                if (success) {
+                    setAdmin(payload)
+                }
             }
         )()
     }, [])
@@ -136,6 +122,99 @@ const ChatSupport = () => {
 
 
     return (
+        <div className="grow flex flex-col justify-end overflow-auto space-y-2">
+            <ul className="p-5 space-y-4">
+                {
+                    loading ? (
+                        <div className="flex justify-center items-center">
+                            <div className="my-5 h-8 w-8 loading"></div>
+                        </div>
+                    ) : null
+                }
+
+                {
+                    conversations.map(
+                        (message) => <Message key={nanoid()} message={message} self={account.id}/>
+                    )
+                }
+            </ul>
+
+            <form
+                onSubmit={handleSubmit}
+                className="h-12 flex items-center px-5 border-t"
+            >
+                <button
+                    type="button"
+                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                    </svg>
+                </button>
+
+                <input
+                    name="message"
+                    placeholder="Aa"
+                    value={message}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    className="grow px-2 outline-none resize-none"
+                    rows={1}
+                />
+                <button
+                    type="button"
+                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+                <button
+                    type="submit"
+                    disabled={isDisable}
+                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="m9.813 5.146 9.027 3.99c4.05 1.79 4.05 4.718 0 6.508l-9.027 3.99c-6.074 2.686-8.553.485-5.515-4.876l.917-1.613c.232-.41.232-1.09 0-1.5l-.917-1.623C1.26 4.66 3.749 2.46 9.813 5.146ZM6.094 12.389h7.341"></path>
+                    </svg>
+                </button>
+
+            </form>
+        </div>
+    )
+}
+
+const ChatSupport = () => {
+    const {account} = useSelector(state => state.auth)
+
+    const [displayChat, setDisplayChat] = useState(false)
+    const toggleDisplayChat = useCallback(() => {
+        setDisplayChat(toggle => !toggle)
+    }, [])
+
+    useEffect(() => {
+        (
+            async () => {
+                try {
+                    await SocketService.getSocket()
+                } catch (error) {
+                    console.log(error.message);
+                }
+            }
+        )()
+
+        return () => SocketService.disconnect()
+
+    }, [account])
+
+
+    return (
         <div className="fixed z-40 bottom-5 right-10">
             {
                 displayChat ? (
@@ -156,71 +235,7 @@ const ChatSupport = () => {
                             </button>
                         </div>
 
-                        <div className="grow flex flex-col justify-end overflow-auto space-y-2">
-                            <ul className="p-5 space-y-4">
-                                {
-                                    loading ? (
-                                        <div className="flex justify-center items-center">
-                                            <div className="my-5 h-8 w-8 loading"></div>
-                                        </div>
-                                    ) : null
-                                }
-
-                                {
-                                    conversations.map(
-                                        (message) => <Message key={nanoid()} message={message} self={account.id}/>
-                                    )
-                                }
-                            </ul>
-
-                            <form
-                                onSubmit={handleSubmit}
-                                className="h-12 flex items-center px-5 border-t"
-                            >
-                                <button
-                                    type="button"
-                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
-                                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-                                    </svg>
-                                </button>
-
-                                <input
-                                    name="message"
-                                    placeholder="Aa"
-                                    value={message}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    className="grow px-2 outline-none resize-none"
-                                    rows={1}
-                                />
-                                <button
-                                    type="button"
-                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
-                                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={isDisable}
-                                    className="h-8 w-8 p-1.5 flex-none rounded-full text-slate-500 hover:bg-slate-100 hover:text-blue-500 transition-all duration-300"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-full w-full" fill="none"
-                                         viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                              d="m9.813 5.146 9.027 3.99c4.05 1.79 4.05 4.718 0 6.508l-9.027 3.99c-6.074 2.686-8.553.485-5.515-4.876l.917-1.613c.232-.41.232-1.09 0-1.5l-.917-1.623C1.26 4.66 3.749 2.46 9.813 5.146ZM6.094 12.389h7.341"></path>
-                                    </svg>
-                                </button>
-
-                            </form>
-                        </div>
+                        <Chat/>
                     </div>
                 ) : (
                     <div className="w-fit flex flex-col space-y-2">
@@ -258,4 +273,4 @@ const ChatSupport = () => {
     )
 }
 
-export default ChatSupport
+export default memo(ChatSupport)
