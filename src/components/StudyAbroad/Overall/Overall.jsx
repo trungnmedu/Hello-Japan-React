@@ -1,14 +1,7 @@
-import topBanner from '@assets/images/study/banner.jpg'
 
 const Overall = () => {
     return (
         <section id='overall'>
-            <img
-                className='block w-full h-auto'
-                alt='Hello Japan'
-                src={topBanner}
-            />
-
             <div className='py-8 bg-aqua'>
                 <div className="max-w-7xl px-5 mx-auto space-y-5">
                     <div className='px-10 py-2 bg-white rounded-3xl mx-auto w-fit'>

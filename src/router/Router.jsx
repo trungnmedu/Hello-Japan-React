@@ -1,10 +1,10 @@
-import {useSelector} from "react-redux"
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom"
+import { useSelector } from "react-redux"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 
-import LaborExport from "@/pages/LaborExport"
-import Login from "@/pages/Login"
-import Register from "@/pages/Register"
-import StudyAboard from "@/pages/StudyAboard"
+import LaborExport from "@src/pages/LaborExport"
+import Login from "@src/pages/Login"
+import Register from "@src/pages/Register"
+import StudyAboard from "@src/pages/StudyAboard"
 
 import AdminChat from "@components/Admin/Chat/Chat"
 import AdminConsultancy from "@components/Admin/Consultancy/Consultancy"

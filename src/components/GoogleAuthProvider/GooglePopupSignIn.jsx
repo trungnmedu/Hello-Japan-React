@@ -1,9 +1,9 @@
-import {googleSignIn} from "@/services/authentication"
-import {setAccount} from "@contexts/account"
-import {GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google"
-import {useState} from "react"
-import {useDispatch} from "react-redux"
-import {useNavigate} from "react-router-dom"
+import { setAccount } from "@contexts/account"
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google"
+import { googleSignIn } from "@services/authentication"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 const GoogleAuthProvider = ({ children }) => {
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID

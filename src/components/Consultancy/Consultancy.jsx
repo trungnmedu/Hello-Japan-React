@@ -1,6 +1,6 @@
-import {postRequestConsultancy} from '@/services/customer'
-import rules from '@/validation/rule'
-import {useFormik} from 'formik'
+import { postRequestConsultancy } from '@services/customer'
+import rules from '@src/validation/rule'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 

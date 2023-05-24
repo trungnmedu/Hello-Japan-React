@@ -1,20 +1,11 @@
-import {addPartnerStudy, deletePartnerStudy} from "@/services/admin"
-import {getAllPartnerStudy} from "@/services/public"
-import rules from "@/validation/rule"
-import {base64Image} from "@utils/file"
-import {useFormik} from "formik"
-import {useCallback, useEffect, useState} from "react"
+import { addPartnerStudy, deletePartnerStudy } from "@services/admin"
+import { getAllPartnerStudy } from "@services/public"
+import rules from "@src/validation/rule"
+import { base64Image } from "@utils/file"
+import { useFormik } from "formik"
+import { useCallback, useEffect, useState } from "react"
 import * as Yup from 'yup'
 
-const studyPartner = Yup.object().shape(
-    {
-        name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
-        address: Yup.string().required("Địa chỉ là bắt buộc."),
-        phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
-        file: Yup.mixed().required('Logo là bắt buộc.'),
-        description: Yup.string()
-    }
-)
 
 const AddPartnerStudy = ({ toggle, refetch }) => {
     const [fileImage, setFileImage] = useState(null)
@@ -24,10 +15,20 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
             validateOnBlur: true,
             validateOnChange: true,
             validateOnMount: false,
-            validationSchema: studyPartner,
+            validationSchema: Yup.object().shape(
+                {
+                    name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
+                    address: Yup.string().required("Địa chỉ là bắt buộc."),
+                    link: Yup.string(),
+                    phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
+                    file: Yup.mixed().required('Logo là bắt buộc.'),
+                    description: Yup.string()
+                }
+            ),
             initialValues: {
                 name: '',
                 address: '',
+                link: '',
                 phone: '',
                 file: null,
                 description: ''
@@ -53,10 +54,12 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
     )
 
     const disableSubmit = !formik.isValid || formik.isSubmitting
-    const { name, address, phone, file, description } = formik.values
-    const { name: nameError, address: addressError, phone: phoneError, description: descriptionError, file: fileError } = formik.errors
-    const { name: nameTouched, address: addressTouched, phone: phoneTouched, description: descriptionTouched, file: fileTouched } = formik.touched
+    const { name, address, phone, file, description, link } = formik.values
+    const { name: nameError, address: addressError, phone: phoneError, description: descriptionError, file: fileError, link: linkError } = formik.errors
+    const { name: nameTouched, address: addressTouched, phone: phoneTouched, description: descriptionTouched, file: fileTouched, link: linkTouched } = formik.touched
     const { handleBlur, handleChange, handleSubmit, setFieldValue } = formik
+
+    console.log(formik.errors);
 
 
     useEffect(() => {
@@ -176,6 +179,19 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     placeholder="81 333 444 555"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                            <label className="w-28">Website</label>
+                            <div className="grow">
+                                <input
+                                    className={`outline-none border w-full rounded-lg px-4 py-1.5 duration-300 transition-all focus:border-dark-blue ${linkError && linkTouched ? 'border-red-400' : 'border'}`}
+                                    name='link'
+                                    value={link}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    placeholder="www.hello-japan.com"
                                 />
                             </div>
                         </div>

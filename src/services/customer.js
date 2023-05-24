@@ -9,12 +9,24 @@ const postRequestConsultancy = async (payload) => {
 }
 
 const getAdmin = async () => {
-    const { data } = await instance.get(        '/get-admin'    )
+    const { data } = await instance.get('/get-admin')
     return data
 }
 
+
+const createProcedure = async (payload) => {
+    const { data } = await instance.post('/procedure/create', payload)
+    return data
+}
+
+const getAllProcedure = async () => {
+    const { data } = await instance.get('/procedure')
+    return data
+}
 export {
-    postRequestConsultancy,
-    getAdmin
+    getAdmin,
+    getAllProcedure,
+    createProcedure,
+    postRequestConsultancy
 }
 

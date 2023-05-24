@@ -1,7 +1,7 @@
-import Conversation from "./Conversation"
-import SidebarPanel from "./SidebarPanel"
-import {memo, useEffect} from "react";
-import SocketService from "@/services/socket.js";
+import SocketService from "@services/socket.js";
+import { memo, useEffect } from "react";
+import Conversation from "./Conversation";
+import SidebarPanel from "./SidebarPanel";
 
 const Chat = () => {
     useEffect(() => {

@@ -1,6 +1,6 @@
-import AboutUs from "@/components/Introduction/AboutUs/AboutUs"
-import Commit from "@/components/Introduction/Commit/Commit"
-import Value from "@/components/Introduction/Value/Value"
+import AboutUs from "@src/components/Introduction/AboutUs/AboutUs"
+import Commit from "@src/components/Introduction/Commit/Commit"
+import Value from "@src/components/Introduction/Value/Value"
 
 const Introduction = () => {
     return (

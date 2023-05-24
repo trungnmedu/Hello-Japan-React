@@ -3,35 +3,41 @@
         "baseUrl": ".",
         "paths": {
             "@assets/*": [
-                "./src/assets/*"
+                "src/assets/*"
             ],
             "@components/*": [
-                "./src/components/*"
+                "src/components/*"
+            ],
+            "@validation/*": [
+                "src/validation/*"
             ],
             "@middleware/*": [
-                "./src/middleware/*"
+                "src/middleware/*"
+            ],
+            "@services/*": [
+                "src/services/*"
             ],
             "@pages/*": [
-                "./src/pages/*"
+                "src/pages/*"
             ],
             "@layouts/*": [
-                "./src/layouts/*"
+                "src/layouts/*"
             ],
             "@helpers/*": [
-                "./src/helpers/*"
+                "src/helpers/*"
             ],
             "@configs/*": [
-                "./src/configs/*"
+                "src/configs/*"
             ],
             "@utils/*": [
-                "./src/utils/*"
+                "src/utils/*"
             ],
             "@contexts/*": [
-                "./src/contexts/*"
+                "src/contexts/*"
             ],
-            "@/*": [
-                "./src/*"
-            ],
+            "@src/*": [
+                "src/*"
+            ]
         }
     }
 }
