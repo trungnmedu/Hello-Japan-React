@@ -1,13 +1,13 @@
-import {useState} from "react"
+import { useState } from "react"
 
-const AdminLaborExportProcedure = () => {
-    const [loading, setLoading] = useState(true)
+
+const Procedure = () => {
+    const [loading, setLoading] = useState(false)
     const [consultancies, setConsultancies] = useState([])
 
-
     return (
-        <div className="mx-auto max-w-7xl px-4 pt-20 space-y-10">
-            <h2 className="text-2xl text-center text-catalina-blue font-medium">Danh Sách Đăng Ký Tư Vấn</h2>
+        <div className="mx-auto max-w-7xl mt-10 px-4 space-y-10">
+            <h2 className="text-2xl text-center text-catalina-blue font-medium">Xử Lý Hồ Sơ</h2>
 
             <table className="w-full border-gray-200 border">
                 <thead>
@@ -15,10 +15,9 @@ const AdminLaborExportProcedure = () => {
                         <th className="w-28 px-4 border text-left">Mã hồ sơ</th>
                         <th className="px-4 border text-left">Họ tên</th>
                         <th className="py-2 px-4 border text-left">Số điện thoại</th>
-                        <th className="py-2 px-4 border text-left">Loại tư vấn</th>
-                        <th className="py-2 px-4 border text-left">Yêu cầu tư vấn</th>
+                        <th className="py-2 px-4 border text-left">Trường đăng ký</th>
                         <th className="py-2 px-4 border text-left">Ngày đăng ký</th>
-                        <th className="py-2 px-4 border text-left">Trạng thái tư vấn</th>
+                        <th className="py-2 px-4 border text-left">Trạng thái hồ sơ</th>
                     </tr>
                 </thead>
 
@@ -42,11 +41,12 @@ const AdminLaborExportProcedure = () => {
                     }
 
                 </tbody>
+
             </table>
 
         </div >
     )
 }
 
-export default AdminLaborExportProcedure
+export default Procedure
 

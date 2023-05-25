@@ -1,53 +1,53 @@
 import instance from '@middleware/request'
 
 const getAllConsultancy = async () => {
-    const {data} = await instance.get('/consultancy')
+    const { data } = await instance.get('/consultancy')
     return data
 }
 
 const updateConsultancy = async (payload) => {
-    const {data} = await instance.put(
+    const { data } = await instance.put(
         '/consultancy',
         payload
     )
     return data
 }
 
-const addPartnerStudy = async (payload) => {
-    const {data} = await instance.post(
-        '/partner-study',
+const addPartner = async (payload) => {
+    const { data } = await instance.post(
+        '/partner',
         payload
     )
     return data
 }
 
 
-const deletePartnerStudy = async (payload) => {
-    const {data} = await instance.delete(
-        '/partner-study',
-        {data: payload}
+const deletePartner = async (payload) => {
+    const { data } = await instance.delete(
+        '/partner',
+        { data: payload }
     )
     return data
 }
 
 const getAllConversations = async () => {
-    const {data} = await instance.get('/conversations')
+    const { data } = await instance.get('/conversations')
     return data
 }
 
 const getConversationByClientId = async (params) => {
-    const {data} = await instance.get(
+    const { data } = await instance.get(
         '/conversations',
-        {params}
+        { params }
     )
     return data
 }
 
 export {
     getAllConsultancy,
-    deletePartnerStudy,
+    deletePartner,
     updateConsultancy,
-    addPartnerStudy,
+    addPartner,
     getAllConversations,
     getConversationByClientId
 }

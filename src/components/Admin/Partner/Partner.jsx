@@ -1,5 +1,5 @@
-import { addPartnerStudy, deletePartnerStudy } from "@services/admin"
-import { getAllPartnerStudy } from "@services/public"
+import { addPartner, deletePartner } from "@services/admin"
+import { getAllPartner } from "@services/public"
 import rules from "@src/validation/rule"
 import { base64Image } from "@utils/file"
 import { useFormik } from "formik"
@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react"
 import * as Yup from 'yup'
 
 
-const AddPartnerStudy = ({ toggle, refetch }) => {
+const AddPartner = ({ toggle, refetch }) => {
     const [fileImage, setFileImage] = useState(null)
 
     const formik = useFormik(
@@ -22,7 +22,7 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                     link: Yup.string(),
                     phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
                     file: Yup.mixed().required('Logo là bắt buộc.'),
-                    description: Yup.string()
+                    description: Yup.string(),
                 }
             ),
             initialValues: {
@@ -31,36 +31,30 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                 link: '',
                 phone: '',
                 file: null,
-                description: ''
+                description: '',
+                type: "STUDY"
             },
             onSubmit: async (values) => {
-                try {
-                    const payload = new FormData()
-                    Object.keys(values).forEach(
-                        key => {
-                            if (values[key]) {
-                                payload.append(key, values[key])
-                            }
+                const payload = new FormData()
+                Object.keys(values).forEach(
+                    key => {
+                        if (values[key]) {
+                            payload.append(key, values[key])
                         }
-                    )
-                    await addPartnerStudy(payload)
-                    refetch()
-                    toggle()
-                } catch {
-                    console.log("Error")
-                }
+                    }
+                )
+                await addPartner(payload)
+                refetch()
+                toggle()
             }
         }
     )
 
     const disableSubmit = !formik.isValid || formik.isSubmitting
-    const { name, address, phone, file, description, link } = formik.values
+    const { name, address, phone, file, description, link, type } = formik.values
     const { name: nameError, address: addressError, phone: phoneError, description: descriptionError, file: fileError, link: linkError } = formik.errors
     const { name: nameTouched, address: addressTouched, phone: phoneTouched, description: descriptionTouched, file: fileTouched, link: linkTouched } = formik.touched
     const { handleBlur, handleChange, handleSubmit, setFieldValue } = formik
-
-    console.log(formik.errors);
-
 
     useEffect(() => {
         if (file) {
@@ -116,7 +110,6 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                                         />
                                     </div>
                                 </div>
-
 
                                 <div className="flex items-center space-x-4">
                                     <label className="w-28">Địa Chỉ</label>
@@ -195,6 +188,45 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
                                 />
                             </div>
                         </div>
+                        <div className="flex items-center space-x-4">
+                            <label className="w-28">Liên Kết</label>
+                            <div className="grow flex space-x-4">
+                                <label className='flex space-x-2 items-center cursor-pointer group'>
+                                    <div className="circle-check w-5 h-5 fill-catalina-blue">
+                                        <input
+                                            name='type'
+                                            type="radio"
+                                            value='STUDY'
+                                            onChange={handleChange}
+                                            checked={type === 'STUDY'}
+                                        />
+                                        <svg viewBox="0 0 35.6 35.6">
+                                            <circle className="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                            <circle className="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                            <polyline className="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span className={`group-hover:text-catalina-blue transition-all duration-300 group-hover:font-medium ${type === 'STUDY' ? 'text-catalina-blue font-medium' : 'font-normal'}`}>Du học</span>
+                                </label>
+                                <label className='flex space-x-2 items-center cursor-pointer group'>
+                                    <div className="circle-check w-5 h-5 fill-red-600">
+                                        <input
+                                            name='type'
+                                            type="radio"
+                                            value='LABOR'
+                                            onChange={handleChange}
+                                            checked={type === 'LABOR'}
+                                        />
+                                        <svg viewBox="0 0 35.6 35.6">
+                                            <circle className="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                            <circle className="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                            <polyline className="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span className={`group-hover:text-red-600 transition-all duration-300 group-hover:font-medium ${type === 'LABOR' ? 'text-red-600 font-medium' : 'font-normal'}`}>Lao động</span>
+                                </label>
+                            </div>
+                        </div>
                         <div className="flex py-1 space-x-4">
                             <label className="w-28">Mô tả</label>
                             <div className="grow">
@@ -228,20 +260,19 @@ const AddPartnerStudy = ({ toggle, refetch }) => {
     )
 }
 
-const PartnerStudy = () => {
+const Partner = () => {
     const [displayAddPartner, setDisplayStudyAddPartner] = useState(false)
     const [partners, setPartners] = useState([])
 
     const fetchPartners = useCallback(async () => {
-        const { success, payload } = await getAllPartnerStudy()
+        const { success, payload } = await getAllPartner()
         if (success) {
             setPartners(payload)
         }
     }, [])
 
-
-    const deletePartner = useCallback(async (partner) => {
-        await deletePartnerStudy(partner)
+    const handleDeletePartner = useCallback(async (partner) => {
+        await deletePartner(partner)
         fetchPartners()
     }, [])
 
@@ -258,7 +289,7 @@ const PartnerStudy = () => {
         <div className="mx-auto max-w-7xl px-4 pt-20 space-y-10">
 
             <div className="flex justify-between">
-                <h2 className="text-2xl font-medium text-catalina-blue">Liên Kết Du Học</h2>
+                <h2 className="text-2xl font-medium text-catalina-blue">Liên Kết Đối Tác</h2>
 
                 <button
                     className="bg-red-500 hover:bg-red-600 transition-all duration-300 px-5 py-1.5 rounded text-white font-medium"
@@ -271,10 +302,9 @@ const PartnerStudy = () => {
             <table className="w-full border rounded border-collapse border-gray-200">
                 <thead>
                     <tr className="border text-gray-700 border-gray-200">
-                        <td className="py-2 px-4 font-medium">Trường</td>
+                        <td className="py-2 px-4 font-medium">Đối Tác</td>
                         <td className="py-2 px-4 font-medium">Địa Chỉ</td>
                         <td className="py-2 px-4 font-medium">Ngày Liên Kết</td>
-                        <td className="py-2 px-4 font-medium">Rating</td>
                         <td className="py-2 px-4 font-medium">Hành Động</td>
                     </tr>
                 </thead>
@@ -299,7 +329,6 @@ const PartnerStudy = () => {
                                     </td>
                                     <td className="py-2 px-4">{partner?.address}</td>
                                     <td className="py-2 px-4">{new Date(partner?.createdAt).toLocaleDateString()}</td>
-                                    <td className="py-2 px-4">4.5/5</td>
                                     <td className="py-2 px-4">
                                         <div className="flex space-x-2">
                                             <button className="text-sm text-catalina-blue">
@@ -307,7 +336,7 @@ const PartnerStudy = () => {
                                             </button>
                                             <button
                                                 className="text-sm text-red-500"
-                                                onClick={() => deletePartner(partner)}
+                                                onClick={() => handleDeletePartner(partner)}
                                             >
                                                 Huỷ Liên Kết
                                             </button>
@@ -319,9 +348,9 @@ const PartnerStudy = () => {
                     }
                 </tbody>
             </table>
-            {displayAddPartner ? <AddPartnerStudy refetch={fetchPartners} toggle={toggleDisplayAddPartner} /> : null}
+            {displayAddPartner ? <AddPartner refetch={fetchPartners} toggle={toggleDisplayAddPartner} /> : null}
         </div>
     )
 }
 
-export default PartnerStudy
+export default Partner

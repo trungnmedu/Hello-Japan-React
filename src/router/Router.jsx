@@ -8,9 +8,8 @@ import StudyAboard from "@src/pages/StudyAboard"
 
 import AdminChat from "@components/Admin/Chat/Chat"
 import AdminConsultancy from "@components/Admin/Consultancy/Consultancy"
-import AdminLaborExportProcedure from "@components/Admin/LaborExport/LaborExport"
-import AdminPartnerStudy from "@components/Admin/PartnerStudy/PartnerStudy"
-import AdminStudyAboardProcedure from "@components/Admin/StudyAbroad/StudyAbroad"
+import AdminPartner from "@components/Admin/Partner/Partner"
+import AdminProcedure from "@components/Admin/Procedure/procedure"
 import Admin from "@layouts/Admin"
 
 import Procedure from "@components/Home/Procedure/Procedure"
@@ -29,9 +28,8 @@ const AppRouter = () => {
                         <>
                             <Route path="admin" element={<Admin />} >
                                 <Route index element={<AdminConsultancy />} />
-                                <Route path="study-abroad-procedure" element={<AdminStudyAboardProcedure />} />
-                                <Route path="labor-export-procedure" element={<AdminLaborExportProcedure />} />
-                                <Route path="partner-study" element={<AdminPartnerStudy />} />
+                                <Route path="procedure" element={<AdminProcedure />} />
+                                <Route path="partner" element={<AdminPartner />} />
                                 <Route path="chat/*" element={<AdminChat />} />
                             </Route>
                             <Route path="*" element={<Navigate to='/admin' />} />

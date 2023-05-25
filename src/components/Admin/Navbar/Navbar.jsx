@@ -1,8 +1,8 @@
 import LogoImage from "@assets/images/Logo.png";
-import {setAccount} from "@contexts/account";
-import {useCallback} from "react";
-import {useDispatch} from "react-redux";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { setAccount } from "@contexts/account";
+import { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const { pathname } = useLocation()
@@ -36,27 +36,15 @@ const Navbar = () => {
                     </Link>
                     <Link
                         className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '/admin/study-abroad-procedure' ? 'text-red-600' : 'text-dark-blue'}`}
-                        to='/admin/study-abroad-procedure'
+                        to='/admin/procedure'
                     >
-                        Hồ Sơ Du Học
-                    </Link>
-                    <Link
-                        className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '/admin/labor-export-procedure' ? 'text-red-600' : 'text-dark-blue'}`}
-                        to='/admin/labor-export-procedure'
-                    >
-                        Hồ Sơ XKLĐ
+                        Xử Lý Hồ Sơ
                     </Link>
                     <Link
                         className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '//admin/partner-study' ? 'text-red-600' : 'text-dark-blue'}`}
-                        to='/admin/partner-study'
+                        to='/admin/partner'
                     >
-                        Liên Kết Du Học
-                    </Link>
-                    <Link
-                        className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '//admin/partner-study' ? 'text-red-600' : 'text-dark-blue'}`}
-                        to='/admin/partner-labor'
-                    >
-                        Liên Kết XKLĐ
+                        Liên Kết Đối Tác
                     </Link>
                     <Link
                         className={`font-medium hover:text-red-600 transition-all duration-300 ${pathname === '//admin/partner-study' ? 'text-red-600' : 'text-dark-blue'}`}

@@ -1,6 +1,6 @@
 
 import { createProcedure } from "@services/customer"
-import { getAllPartnerStudy } from "@services/public"
+import { getAllPartner } from "@services/public"
 import rules from "@validation/rule"
 import { useFormik } from "formik"
 import { useCallback, useEffect, useState } from "react"
@@ -227,7 +227,7 @@ const StudyAbroadInfo = () => {
 
     useEffect(() => {
         const fetchLocation = async () => {
-            const { success, payload } = await getAllPartnerStudy()
+            const { success, payload } = await getAllPartner("STUDY")
             if (success) {
                 setLinks(payload || [])
             }

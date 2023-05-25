@@ -13,7 +13,6 @@ const getAdmin = async () => {
     return data
 }
 
-
 const createProcedure = async (payload) => {
     const { data } = await instance.post('/procedure/create', payload)
     return data

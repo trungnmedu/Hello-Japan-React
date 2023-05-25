@@ -4,16 +4,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 
-const contactSchema = Yup.object().shape(
-    {
-        name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
-        email: Yup.string().matches(rules.email, "Email không hợp lệ.").required("Email là bắt buộc."),
-        phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
-        description: Yup.string().matches(rules.description, "Yêu cầu tư vấn không hợp lệ.")
-    }
-)
-
-
 const Consultancy = () => {
 
     const formik = useFormik(
@@ -21,7 +11,14 @@ const Consultancy = () => {
             validateOnBlur: true,
             validateOnChange: true,
             validateOnMount: true,
-            validationSchema: contactSchema,
+            validationSchema: Yup.object().shape(
+                {
+                    name: Yup.string().matches(rules.name, 'Họ và tên không hợp lệ.').required('Họ và tên là bắt buộc.'),
+                    email: Yup.string().matches(rules.email, "Email không hợp lệ.").required("Email là bắt buộc."),
+                    phone: Yup.string().matches(rules.phone, "Phone không hợp lệ.").required("Phone là bắt buộc."),
+                    description: Yup.string().matches(rules.description, "Yêu cầu tư vấn không hợp lệ.")
+                }
+            ),
             initialValues: {
                 name: '',
                 email: '',

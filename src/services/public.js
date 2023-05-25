@@ -1,11 +1,18 @@
 import instance from "@middleware/request"
 
-const getAllPartnerStudy = async () => {
-    const { data } = await instance.get('/partner-study')
+const getAllPartner = async (type) => {
+    const { data } = await instance.get(
+        '/partner',
+        {
+            params: {
+                type
+            }
+        }
+    )
     return data
 }
 
 export {
-    getAllPartnerStudy
+    getAllPartner
 }
 
