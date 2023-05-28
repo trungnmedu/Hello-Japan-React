@@ -5,8 +5,8 @@ const Footer = () => {
             <div className="max-w-7xl px-5 mx-auto text-white grid grid-cols-3 gap-5 py-5">
                 <div>
                     <p>Hotline: 0947 116 226</p>
-                    <p>Email: Info@Hello Japan.edu.vn</p>
-                    <p>Website: Hello Japan.edu.vn</p>
+                    <p>Email: trungnmse150182@fpt.edu.vn</p>
+                    <p>Website: hello-japan.fullstackcampus.online</p>
                     <p>Thời gian làm việc: Thứ 2 - Thứ 6: 8h00 - 17h30</p>
                 </div>
                 <div>
@@ -24,8 +24,7 @@ const Footer = () => {
                 </div>
 
             </div>
-            <h5 className="text-center py-1 text-white bg-slate-900">All rights reserved. Powered by Hello Japan</h5>
-
+            <h5 className="text-center py-1 text-white bg-slate-900">All rights reserved ©️. Powered by Hello Japan 2023</h5>
         </footer>
     )
 }
