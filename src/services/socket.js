@@ -1,5 +1,5 @@
-import {getToken} from "@utils/jwt";
-import {io} from "socket.io-client";
+import { getToken } from "@utils/jwt";
+import { io } from "socket.io-client";
 
 
 class SocketService {
@@ -13,7 +13,7 @@ class SocketService {
 
         SocketService.isConnecting = true
         SocketService.socket = io(
-            "ws://localhost:5000",
+            import.meta.env.VITE_SOCKET_URL,
             {
                 path: "/chat",
                 autoConnect: false,
@@ -47,27 +47,27 @@ class SocketService {
     }
 
     static disconnect() {
-        if(SocketService.socket && SocketService.socket.connected){
+        if (SocketService.socket && SocketService.socket.connected) {
             SocketService.socket.disconnect()
             SocketService.socket = null
         }
     }
 
-    static registerEvent (event, callback) {
-        if(SocketService.socket ){
+    static registerEvent(event, callback) {
+        if (SocketService.socket) {
             SocketService.socket.on(event, callback)
         }
     }
 
-    static removeEvent(event){
+    static removeEvent(event) {
         console.log("REMOVE")
-        if(SocketService.socket){
+        if (SocketService.socket) {
             SocketService.socket.off(event)
         }
     }
 
-    static removeAllEvent(event){
-        if(SocketService.socket){
+    static removeAllEvent(event) {
+        if (SocketService.socket) {
             SocketService.socket.removeAllListeners()
         }
     }
