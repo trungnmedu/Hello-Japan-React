@@ -1,3 +1,4 @@
+import AdminAvatar from "@assets/images/AdminAvatar.jpg";
 import { getAllConversations } from "@services/admin.js";
 import { getAdmin } from "@services/customer.js";
 import SocketService from "@services/socket";
@@ -7,6 +8,7 @@ import { nanoid } from "nanoid";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from 'yup';
+
 
 const Message = ({ admin, message }) => {
     const { sender, body } = message
@@ -19,8 +21,15 @@ const Message = ({ admin, message }) => {
             {
                 isAdmin ? (
                     <li className="list-none">
-                        <div className="grow overflow-hidden">
-                            <p className="w-fit max-w-full rounded-lg bg-red-500 text-white p-2 px-6">{body}</p>
+                        <div className="flex space-x-2">
+                            <div className="h-8 w-8 rounded-full overflow-hidden">
+                                <img src={AdminAvatar} />
+
+                            </div>
+                            <div className="grow overflow-hidden">
+                                <p className="w-fit max-w-full rounded-lg bg-red-500 text-white p-2 px-6">{body}</p>
+                            </div>
+
                         </div>
                     </li>
                 ) : (
@@ -217,7 +226,7 @@ const ChatSupport = () => {
                         className="max-w-sm bg-white rounded flex flex-col shadow"
                     >
                         <div className="border-b p-2 text-slate-700 border-gray-200 flex justify-between">
-                            <h2 className="text-lg">Chatting with Hello Japan</h2>
+                            <h2 className="text-lg">Hỗ trợ trực tuyến</h2>
                             <button
                                 className="h-6 aspect-square hover:p-1 hover:bg-red-600 hover:text-white rounded-full transition-all"
                                 onClick={toggleDisplayChat}

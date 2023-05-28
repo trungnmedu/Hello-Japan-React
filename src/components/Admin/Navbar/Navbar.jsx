@@ -1,3 +1,4 @@
+import AdminAvatar from "@assets/images/AdminAvatar.jpg";
 import LogoImage from "@assets/images/Logo.png";
 import { setAccount } from "@contexts/account";
 import { useCallback } from "react";
@@ -61,7 +62,7 @@ const Navbar = () => {
                     >
                         <img
                             className="h-10 w-10 rounded-full"
-                            src="https://lineone.piniastudio.com/images/avatar/avatar-11.jpg"
+                            src={AdminAvatar}
                             alt=""
                         />
                     </button>

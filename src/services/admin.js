@@ -21,7 +21,6 @@ const addPartner = async (payload) => {
     return data
 }
 
-
 const deletePartner = async (payload) => {
     const { data } = await instance.delete(
         '/partner',
@@ -43,11 +42,26 @@ const getConversationByClientId = async (params) => {
     return data
 }
 
+
+const getAllProcedure = async () => {
+    const { data } = await instance.get('/admin/procedure')
+    return data
+}
+const updateProcedure = async (payload) => {
+    const { data } = await instance.put(
+        '/admin/procedure',
+        payload
+    )
+    return data
+}
+
 export {
-    getAllConsultancy,
-    deletePartner,
-    updateConsultancy,
     addPartner,
+    deletePartner,
+    updateProcedure,
+    getAllProcedure,
+    getAllConsultancy,
+    updateConsultancy,
     getAllConversations,
     getConversationByClientId
 }

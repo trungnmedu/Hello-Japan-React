@@ -1,9 +1,9 @@
 import LogoImage from "@assets/images/Logo.png"
-import {setAccount} from "@contexts/account"
-import {useCallback} from "react"
-import {useDispatch, useSelector} from "react-redux"
-import {Link} from "react-router-dom"
-import {HashLink} from "react-router-hash-link"
+import { setAccount } from "@contexts/account"
+import { useCallback } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 const Header = () => {
     const account = useSelector(state => state.auth.account)
@@ -51,6 +51,15 @@ const Header = () => {
                                     <li className="list-none h-fit">
                                         <HashLink
                                             smooth={true}
+                                            to='/japanese-study-abroad#info'
+                                            className="font-medium block text-sm px-5 py-2 text-dark-blue rounded hover:text-white hover:bg-red-600 transition-all duration-300"
+                                        >
+                                            Thông Các Trường
+                                        </HashLink>
+                                    </li>
+                                    <li className="list-none h-fit">
+                                        <HashLink
+                                            smooth={true}
                                             to='/japanese-study-abroad#overall'
                                             className="font-medium block text-sm px-5 py-2 text-dark-blue rounded hover:text-white hover:bg-red-600 transition-all duration-300"
                                         >
@@ -89,6 +98,15 @@ const Header = () => {
                             </Link>
                             <div className="hidden group-hover:block absolute right-0 top-full">
                                 <ul className="mt-3 space-y-0.5 bg-white shadow-lg border rounded w-72">
+                                    <li className="list-none h-fit">
+                                        <HashLink
+                                            smooth={true}
+                                            to='/japanese-labor-export#info'
+                                            className="font-medium block text-sm px-5 py-2 text-dark-blue rounded hover:text-white hover:bg-red-600 transition-all duration-300"
+                                        >
+                                            Thông Tin Các Công Việc
+                                        </HashLink>
+                                    </li>
                                     <li className="list-none h-fit">
                                         <HashLink
                                             smooth={true}

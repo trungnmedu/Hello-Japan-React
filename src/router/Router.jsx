@@ -9,7 +9,7 @@ import StudyAboard from "@src/pages/StudyAboard"
 import AdminChat from "@components/Admin/Chat/Chat"
 import AdminConsultancy from "@components/Admin/Consultancy/Consultancy"
 import AdminPartner from "@components/Admin/Partner/Partner"
-import AdminProcedure from "@components/Admin/Procedure/procedure"
+import AdminProcedure from "@components/Admin/Procedure/Procedure"
 import Admin from "@layouts/Admin"
 
 import Procedure from "@components/Home/Procedure/Procedure"

@@ -98,7 +98,7 @@ const AddPartner = ({ toggle, refetch }) => {
                         <div className="flex space-x-5">
                             <div className="grow space-y-5">
                                 <div className="flex items-center space-x-4">
-                                    <label className="w-28">Tên Trường</label>
+                                    <label className="w-28">Tên Đối Tác</label>
                                     <div className="grow">
                                         <input
                                             className={`outline-none border w-full rounded-lg px-4 py-1.5 duration-300 transition-all focus:border-dark-blue ${nameError && nameTouched ? 'border-red-400' : 'border'}`}
@@ -106,7 +106,7 @@ const AddPartner = ({ toggle, refetch }) => {
                                             value={name}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            placeholder="Trường Đại Học Tokyo"
+                                            placeholder="Đối tác ..."
                                         />
                                     </div>
                                 </div>
@@ -319,11 +319,14 @@ const Partner = () => {
                                 >
                                     <td className="px-4">
                                         <div className="flex space-x-2 my-1">
-                                            <img
-                                                alt="Hello Japan"
-                                                className="w-10 h-10 rounded overflow-hidden aspect-square"
-                                                src={partner?.logo}
-                                            />
+                                            <div className="flex justify-center items-center w-10 h-10 rounded overflow-hidden aspect-square">
+                                                <img
+                                                    alt=""
+                                                    className="block w-full h-auto"
+                                                    src={partner?.logo}
+                                                />
+
+                                            </div>
                                             <p className="self-center">{partner?.name}</p>
                                         </div>
                                     </td>

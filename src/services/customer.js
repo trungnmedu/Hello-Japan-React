@@ -14,7 +14,7 @@ const getAdmin = async () => {
 }
 
 const createProcedure = async (payload) => {
-    const { data } = await instance.post('/procedure/create', payload)
+    const { data } = await instance.post('/procedure', payload)
     return data
 }
 

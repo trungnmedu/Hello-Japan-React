@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import * as Yup from 'yup'
 
-const StudyRegister = ({ toggle, target }) => {
+const LaborExportRegister = ({ toggle, target }) => {
     const account = useSelector(state => state.auth.account)
     const { id, avatar } = account
     const isLogin = Object.keys(account).length > 0
@@ -38,7 +38,7 @@ const StudyRegister = ({ toggle, target }) => {
                         avatar,
                         target
                     },
-                    type: "STUDY"
+                    type: "LABOR"
                 }
                 await createProcedure(payload)
                 toggle()
@@ -68,7 +68,7 @@ const StudyRegister = ({ toggle, target }) => {
                         >
 
                             <div className="flex justify-between">
-                                <h2 className="text-xl font-medium text-catalina-blue">Đăng Ký Hồ Sơ Du Học</h2>
+                                <h2 className="text-xl font-medium text-catalina-blue">Đăng Ký Hồ Sơ</h2>
                                 <button
                                     onClick={toggle}
                                     className="h-6 aspect-square hover:p-1 hover:bg-red-600 hover:text-white rounded-full transition-all"
@@ -217,18 +217,18 @@ const News = ({ news }) => {
                 </div>
                 <button onClick={toggleDisplayRegister} className="ml-auto block bg-orange-600 px-3 py-1 rounded text-white">Đăng Ký</button>
             </div>
-            {displayRegister ? <StudyRegister target={news} toggle={toggleDisplayRegister} /> : null}
+            {displayRegister ? <LaborExportRegister target={news} toggle={toggleDisplayRegister} /> : null}
         </>
     )
 }
 
-const StudyAbroadInfo = () => {
+const LaborExportInfo = () => {
 
     const [links, setLinks] = useState([])
 
     useEffect(() => {
         const fetchLocation = async () => {
-            const { success, payload } = await getAllPartner("STUDY")
+            const { success, payload } = await getAllPartner("LABOR")
             if (success) {
                 setLinks(payload || [])
             }
@@ -236,13 +236,15 @@ const StudyAbroadInfo = () => {
         fetchLocation()
     }, [])
     return (
-        <div className="max-w-7xl p-5 mx-auto grid grid-cols-2 gap-8">
+        <section
+            id="info"
+            className="max-w-7xl p-5 mx-auto grid grid-cols-2 gap-8"
+        >
             {
                 links.map((news, index) => <News key={index} news={news} />)
             }
-
-        </div>
+        </section>
     )
 }
 
-export default StudyAbroadInfo
+export default LaborExportInfo
