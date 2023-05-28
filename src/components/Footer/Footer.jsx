@@ -12,7 +12,7 @@ const Footer = () => {
                 <div>
                     <p>CÔNG TY THHH TƯ VẤN VÀ DỊCH VỤ VIỆT NHẬT HELLO JAPAN</p>
                     <p>Địa chỉ: Thu Duc, TP. Hồ Chí Minh.</p>
-                    <p>Website: hellojapan.edu.vn</p>
+                    <p>Website: hello-japan.fullstackcampus.online</p>
                     <p>Thời gian làm việc: Thứ 2 - Thứ 6: 8h00 - 17h30</p>
                 </div>
                 <div className="space-y-5">
