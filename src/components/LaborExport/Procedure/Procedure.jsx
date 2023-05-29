@@ -5,7 +5,7 @@ const steps = [
     },
     {
         name: "Bước 2",
-        description: "Liên công ty Nhật để phỏng vấn.",
+        description: "Liên hệ công ty Nhật để phỏng vấn.",
     },
     {
         name: "Bước 3",
