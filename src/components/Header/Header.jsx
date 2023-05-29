@@ -54,7 +54,7 @@ const Header = () => {
                                             to='/japanese-study-abroad#info'
                                             className="font-medium block text-sm px-5 py-2 text-dark-blue rounded hover:text-white hover:bg-red-600 transition-all duration-300"
                                         >
-                                            Thông Các Trường
+                                            Thông Tin Các Trường
                                         </HashLink>
                                     </li>
                                     <li className="list-none h-fit">

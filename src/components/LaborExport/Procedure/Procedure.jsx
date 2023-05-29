@@ -1,7 +1,7 @@
 const steps = [
     {
         name: "Bước 1",
-        description: "Nạp giấy tờ cái nhân",
+        description: "Nạp giấy tờ cá nhân",
     },
     {
         name: "Bước 2",

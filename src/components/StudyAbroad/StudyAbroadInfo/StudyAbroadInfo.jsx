@@ -113,7 +113,7 @@ const StudyRegister = ({ toggle, target }) => {
                                 <div className="flex items-center space-x-4">
                                     <label className="w-20">Trường</label>
                                     <div className="grow overflow-hidden">
-                                        <p className="border w-full rounded-lg px-4 py-1.5  truncate">Trường Shinwa Foreign Language Academy</p>
+                                        <p className="border w-full rounded-lg px-4 py-1.5  truncate">{target.name}</p>
                                     </div>
                                 </div>
 
