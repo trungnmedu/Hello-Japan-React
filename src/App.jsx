@@ -1,12 +1,14 @@
-import {setAccount} from "@contexts/account"
-import {useEffect, useState, memo} from "react"
-import {useDispatch} from "react-redux"
+import { setAccount } from "@contexts/account"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import AppRouter from "./router/Router"
-import {getProfile} from "./services/authentication"
+import { getProfile } from "./services/authentication"
 
 const App = () => {
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         (
@@ -17,13 +19,18 @@ const App = () => {
                     return
                 }
 
-
                 try {
-                    const {success, payload} = await getProfile()
+                    const { success, payload } = await getProfile()
 
                     if (success) {
                         dispatch(setAccount(payload))
+                        return
                     }
+
+                    localStorage.removeItem("accessToken")
+                } catch {
+                    localStorage.removeItem("accessToken")
+                    navigate("/login")
                 } finally {
                     setLoading(false)
                 }
@@ -42,7 +49,7 @@ const App = () => {
                         <div className="h-10 w-10 loading">
                         </div>
                     </div>
-                ) : <AppRouter/>
+                ) : <AppRouter />
             }
         </>
     )
