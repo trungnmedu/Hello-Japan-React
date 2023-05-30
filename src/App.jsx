@@ -28,7 +28,8 @@ const App = () => {
                     }
 
                     localStorage.removeItem("accessToken")
-                } catch {
+                } catch (e) {
+                    console.log(e);
                     localStorage.removeItem("accessToken")
                     navigate("/login")
                 } finally {

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 
 import LaborExport from "@src/pages/LaborExport"
 import Login from "@src/pages/Login"
@@ -21,33 +21,31 @@ const AppRouter = () => {
     const { role = "CUSTOMER" } = useSelector(state => state.auth.account)
 
     return (
-        <BrowserRouter>
-            <Routes>
-                {
-                    role === "ADMIN" ? (
-                        <>
-                            <Route path="admin" element={<Admin />} >
-                                <Route index element={<AdminConsultancy />} />
-                                <Route path="procedure" element={<AdminProcedure />} />
-                                <Route path="partner" element={<AdminPartner />} />
-                                <Route path="chat/*" element={<AdminChat />} />
-                            </Route>
-                            <Route path="*" element={<Navigate to='/admin' />} />
-                        </>
-                    ) : (
-                        <Route path="*" element={<Main />}>
-                            <Route index element={<Home />} />
-                            <Route path="introduction" element={<Introduction />} />
-                            <Route path="japanese-study-abroad" element={<StudyAboard />} />
-                            <Route path="japanese-labor-export" element={<LaborExport />} />
-                            <Route path="procedure" element={<Procedure />} />
+        <Routes>
+            {
+                role === "ADMIN" ? (
+                    <>
+                        <Route path="admin" element={<Admin />} >
+                            <Route index element={<AdminConsultancy />} />
+                            <Route path="procedure" element={<AdminProcedure />} />
+                            <Route path="partner" element={<AdminPartner />} />
+                            <Route path="chat/*" element={<AdminChat />} />
                         </Route>
-                    )
-                }
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-            </Routes>
-        </BrowserRouter>
+                        <Route path="*" element={<Navigate to='/admin' />} />
+                    </>
+                ) : (
+                    <Route path="*" element={<Main />}>
+                        <Route index element={<Home />} />
+                        <Route path="introduction" element={<Introduction />} />
+                        <Route path="japanese-study-abroad" element={<StudyAboard />} />
+                        <Route path="japanese-labor-export" element={<LaborExport />} />
+                        <Route path="procedure" element={<Procedure />} />
+                    </Route>
+                )
+            }
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+        </Routes>
     )
 }
 
