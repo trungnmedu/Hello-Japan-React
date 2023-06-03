@@ -54,7 +54,7 @@ const StudyRegister = ({ toggle, target }) => {
 
     return (
         <div
-            className="w-screen h-screen fixed top-0 left-0 z-30 bg-indigo-900/30"
+            className="w-screen h-screen overflow-auto fixed top-0 left-0 z-30 bg-indigo-900/30"
             onClick={toggle}
         >
             <div
