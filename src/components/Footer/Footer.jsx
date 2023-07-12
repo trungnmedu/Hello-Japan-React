@@ -7,6 +7,7 @@ const Footer = () => {
                     <p>Hotline: 0947 116 226</p>
                     <p>Email: trungnmse150182@fpt.edu.vn</p>
                     <p>Website: hello-japan.fullstackcampus.online</p>
+                    <a target="_blank" className="hover:text-orange-500 transition-colors" href="https://www.facebook.com/profile.php?id=100069697688626">Facebook: Hello Japan</a>
                     <p>Thời gian làm việc: Thứ 2 - Thứ 6: 8h00 - 17h30</p>
                 </div>
                 <div>
