@@ -13,16 +13,17 @@ import { Link } from "react-router-dom";
 import * as Yup from 'yup';
 
 
-const Message = ({ admin, message }) => {
+const Message = ({ message, self }) => {
     const { sender, body } = message
-    const { id: adminId } = admin
-
-    const isAdmin = adminId === sender
 
     return (
         <>
             {
-                isAdmin ? (
+                self === sender ? (
+                    <li className="list-none">
+                        <p className="ml-auto w-fit max-w-full bg-blue-600 rounded-lg p-2 px-6 text-white">{body}</p>
+                    </li>
+                ) : (
                     <li className="list-none">
                         <div className="flex space-x-2">
                             <div className="h-8 w-8 rounded-full overflow-hidden">
@@ -34,10 +35,6 @@ const Message = ({ admin, message }) => {
                             </div>
 
                         </div>
-                    </li>
-                ) : (
-                    <li className="list-none">
-                        <p className="ml-auto w-fit max-w-full bg-blue-600 rounded-lg p-2 px-6 text-white">{body}</p>
                     </li>
                 )
             }
@@ -139,7 +136,7 @@ const Chat = () => {
 
                 {
                     conversations.map(
-                        (message) => <Message admin={admin} key={nanoid()} message={message} self={account.id} />
+                        (message) => <Message key={nanoid()} message={message} self={account.id} />
                     )
                 }
             </ul>
