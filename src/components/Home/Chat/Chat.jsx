@@ -1,3 +1,4 @@
+import facebookIcon from "@assets/icons/facebook.svg";
 import AdminAvatar from "@assets/images/AdminAvatar.jpg";
 import { getAllConversations } from "@services/admin.js";
 import { getAdmin } from "@services/customer.js";
@@ -7,6 +8,7 @@ import { useFormik } from "formik";
 import { nanoid } from "nanoid";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import * as Yup from 'yup';
 
 
@@ -242,6 +244,8 @@ const ChatSupport = () => {
                     </div>
                 ) : (
                     <div className="w-fit flex flex-col space-y-2">
+
+
                         <button
                             className="bg-catalina-blue text-white w-12 aspect-square rounded-full p-2 animate-bounce"
                         >
@@ -257,10 +261,7 @@ const ChatSupport = () => {
                             onClick={toggleDisplayChat}
                             className="relative z-10 w-fit h-fit"
                         >
-                            <div
-                                className="absolute top-0 left-0 z-auto h-full w-full bg-red-600 aspect-square rounded-full animate-ping">
-
-                            </div>
+                            <div className="absolute top-0 left-0 z-auto h-full w-full bg-red-600 aspect-square rounded-full animate-ping"></div>
                             <div className="bg-red-600 w-12 aspect-square rounded-full p-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="currentColor"
                                     alt="Chat" className="w-full h-full text-white">
@@ -269,6 +270,17 @@ const ChatSupport = () => {
                                 </svg>
                             </div>
                         </button>
+                        <Link
+                            to="https://www.facebook.com/profile.php?id=100069697688626"
+                            target="_blank"
+                            className="relative z-10 w-fit h-fit"
+                        >
+                            <div className="absolute top-0 left-0 z-auto h-full w-full bg-purple-600 aspect-square rounded-full animate-ping"></div>
+                            <img
+                                className="w-12 h-12 block"
+                                src={facebookIcon}
+                            />
+                        </Link>
                     </div>
                 )
             }
