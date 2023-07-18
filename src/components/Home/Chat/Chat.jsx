@@ -1,4 +1,5 @@
 import facebookIcon from "@assets/icons/facebook.svg";
+import instagramIcon from "@assets/icons/instagram.svg";
 import AdminAvatar from "@assets/images/AdminAvatar.jpg";
 import { getAllConversations } from "@services/admin.js";
 import { getAdmin } from "@services/customer.js";
@@ -244,19 +245,15 @@ const ChatSupport = () => {
                     </div>
                 ) : (
                     <div className="w-fit flex flex-col space-y-2">
-
-
-                        <button
-                            className="bg-catalina-blue text-white w-12 aspect-square rounded-full p-2 animate-bounce"
+                        <Link
+                            to="https://www.facebook.com/profile.php?id=100069697688626"
+                            target="_blank"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                className="w-full h-full">
-                                <path fillRule="evenodd"
-                                    d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
-                                    clipRule="evenodd" />
-                            </svg>
-                        </button>
-
+                            <img
+                                className="w-12 h-12 block animate-bounce"
+                                src={facebookIcon}
+                            />
+                        </Link>
                         <button
                             onClick={toggleDisplayChat}
                             className="relative z-10 w-fit h-fit"
@@ -270,15 +267,14 @@ const ChatSupport = () => {
                                 </svg>
                             </div>
                         </button>
+
                         <Link
-                            to="https://www.facebook.com/profile.php?id=100069697688626"
+                            to="https://www.instagram.com/hellojapanplus"
                             target="_blank"
-                            className="relative z-10 w-fit h-fit"
                         >
-                            <div className="absolute top-0 left-0 z-auto h-full w-full bg-purple-600 aspect-square rounded-full animate-ping"></div>
                             <img
-                                className="w-12 h-12 block"
-                                src={facebookIcon}
+                                className="w-12 h-12 block animate-pulse"
+                                src={instagramIcon}
                             />
                         </Link>
                     </div>

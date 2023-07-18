@@ -1,3 +1,6 @@
+import facebookIcon from "@assets/icons/facebook.svg";
+import instagramIcon from "@assets/icons/instagram.svg";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -22,6 +25,26 @@ const Footer = () => {
                         className="w-32 mx-auto block"
                         src='https://yoko.edu.vn/wp-content/uploads/2022/03/logo-da-thong-bao-bo-cong-thuong-mau-xanh.png'
                     />
+                    <div className="flex space-x-2 justify-center">
+                        <Link
+                            to="https://www.facebook.com/profile.php?id=100069697688626"
+                            target="_blank"
+                        >
+                            <img
+                                className="w-8 h-8 block"
+                                src={facebookIcon}
+                            />
+                        </Link>
+                        <Link
+                            to="https://www.instagram.com/hellojapanplus"
+                            target="_blank"
+                        >
+                            <img
+                                className="w-8 h-8 block"
+                                src={instagramIcon}
+                            />
+                        </Link>
+                    </div>
                 </div>
 
             </div>
