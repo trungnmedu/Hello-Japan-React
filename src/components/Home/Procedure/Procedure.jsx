@@ -100,7 +100,7 @@ const ProcedureManage = () => {
                                             </div>
                                             <div className="flex space-x-2">
                                                 <p className="w-16 font-medium flex-none">Website:</p>
-                                                <a href={procedure.target.link} target="_blank">{procedure.target.link}</a>
+                                                <a className="hover:text-red-600 transition-all duration-300" href={procedure.target.link} target="_blank">{procedure.target.link}</a>
                                             </div>
                                             <div className="flex space-x-2">
                                                 <p className="w-16 font-medium flex-none">Phone:</p>

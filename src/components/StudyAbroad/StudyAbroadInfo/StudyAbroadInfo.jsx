@@ -202,7 +202,7 @@ const News = ({ news }) => {
                             </div>
                             <div className="flex space-x-2">
                                 <p className="w-16 font-medium flex-none">Website:</p>
-                                <a href={link} target="_blank">{link}</a>
+                                <a className="hover:text-red-600 transition-all duration-300" href={link} target="_blank">{link}</a>
                             </div>
                             <div className="flex space-x-2">
                                 <p className="w-16 font-medium flex-none">Phone:</p>
